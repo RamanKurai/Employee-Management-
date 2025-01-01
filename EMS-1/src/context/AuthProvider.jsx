@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { createContext } from "react";
 
-const AuthContext = ({children}) => {
-  return (
-    <div>
-      {children}
-    </div>
-  )
-}
+export const AuthContext = createContext()
 
-export default AuthContext
+const AuthProvider = ({ children }) => {
+  return <div>
+    <AuthContext.Provider value={"Raman"}>
+    {children}
+    </AuthContext.Provider>
+    </div>;
+};
+
+export default AuthProvider;
