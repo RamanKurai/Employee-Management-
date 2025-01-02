@@ -14,28 +14,31 @@ const CreateTask = () => {
     const [newTask, setNewTask] = useState({})
 
     const submitHandler = (e) => {
-        e.preventDefault()
-
-        setNewTask({ taskTitle, taskDescription, taskDate, category, active: false, newTask: true, failed: false, completed: false })
-
-        const data = userData
-
-        data.forEach(function (elem) {
-            if (asignTo == elem.firstName) {
-                elem.tasks.push(newTask)
-                elem.taskCounts.newTask = elem.taskCounts.newTask + 1
-            }
-        })
-        setUserData(data)
-        console.log(data);
-
-        setTaskTitle('')
-        setCategory('')
-        setAsignTo('')
-        setTaskDate('')
-        setTaskDescription('')
-
-    }
+      e.preventDefault();
+    
+      const updatedData = userData.map((elem) => {
+        if (asignTo === elem.firstName) {
+          return {
+            ...elem,
+            tasks: [...elem.tasks, newTask],
+            taskCounts: {
+              ...elem.taskCounts,
+              newTask: elem.taskCounts.newTask + 1,
+            },
+          };
+        }
+        return elem;
+      });
+    
+      setUserData(updatedData);
+    
+      setTaskTitle('');
+      setCategory('');
+      setAsignTo('');
+      setTaskDate('');
+      setTaskDescription('');
+    };
+    
 
     return (
         <div className='p-5 bg-[#1c1c1c] mt-5 rounded'>
