@@ -7,19 +7,21 @@ import { getLocalStorage, setLocalStorage } from "./utilis/localStorage";
 import { AuthContext } from "./context/AuthProvider";
 
 const App = () => {
+
   const [user, setUser] = useState(null);
+  const authData = useContext(AuthContext)
+  console.log(authData)
+
   const handleLogin = (email, password) => {
     if (email == "admin@me.com" && password == '123') {
       setUser("admin");
-    } else if (email == "user@me.com" && password == '123') {
+    } else if ( authData && authData.employees.find((e) => email == e.email && e.password == password)) {
       setUser("employee");
     } else {
       alert("Invalid Credentials");
     }
   };
-
-  const data = useContext(AuthContext)
-  console.log(data)
+  
   return (
     <div>
       {!user ? <Login handleLogin={handleLogin} /> : '' }

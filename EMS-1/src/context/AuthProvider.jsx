@@ -1,13 +1,21 @@
-import React, { createContext } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import { getLocalStorage } from "../utilis/localStorage";
 
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  return <div>
-    <AuthContext.Provider value={"Raman"}>
-    {children}
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const { employees, admin } = getLocalStorage();
+    setUserData({ employees, admin });
+  }, []);
+
+  return (
+    <AuthContext.Provider value={userData}>
+      {children}
     </AuthContext.Provider>
-    </div>;
+  );
 };
 
 export default AuthProvider;
